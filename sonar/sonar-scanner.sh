@@ -1,0 +1,1 @@
+sonar-scanner -Dsonar.sources=.  -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin -Dsonar.projectKey=$(basename `pwd`)
