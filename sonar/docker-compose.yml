@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"
+    networks:
+      - sonarnet
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://db:5432/sonar
+    volumes:
+      - /Users/jack/work/docker/sonar/sonarqube_conf:/opt/sonarqube/conf
+      - /Users/jack/work/docker/sonar/sonarqube_data:/opt/sonarqube/data
+      - /Users/jack/work/docker/sonar/sonarqube_extensions:/opt/sonarqube/extensions
+      - /Users/jack/work/docker/sonar/sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+
+  db:
+    image: postgres
+    networks:
+      - sonarnet
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - /Users/jack/work/docker/sonar/postgresql:/var/lib/postgresql
+      - /Users/jack/work/docker/sonar/postgresql_data:/var/lib/postgresql/data
+
+networks:
+  sonarnet:
+    driver: bridge
